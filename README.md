@@ -1,6 +1,6 @@
 ## Welcome to Hotel-Reserve: Your Ultimate Hotel Booking API 🏨✨
 
-Welcome to Hotely, your go-to solution for seamless hotel booking experiences! Developed with the latest technologies in C# and ASP.NET Core, Hotel Reserve offers a robust and intuitive RESTful API that empowers you to effortlessly manage hotel bookings with ease.
+Welcome to Hotel-Reserve, your go-to solution for seamless hotel booking experiences! Developed with the latest technologies in C# and ASP.NET Core, Hotel Reserve offers a robust and intuitive RESTful API that empowers you to effortlessly manage hotel bookings with ease.
 
 ### Preparing Your Environment
 
@@ -66,14 +66,14 @@ Let's get you started with Hotelify in just a few simple steps:
    dotnet build
    ```
 
-6. **Run Hotelify**:
+6. **Run Hotel-Reserve**:
    It's time to launch Hotel-Reserve! Run the following command to start the API:
 
    ```sh
    dotnet run
    ```
 
-7. **Explore Hotelify in Your Browser**:
+7. **Explore Hotel-Reserve in Your Browser**:
    Hotel-Reserve is now up and running! Access the API documentation and explore its features in your favorite browser:
 
    ```sh
