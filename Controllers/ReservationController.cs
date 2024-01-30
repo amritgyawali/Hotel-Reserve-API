@@ -23,6 +23,10 @@ namespace API.Controllers
         [HttpPost("Register")]
         public ActionResult Register(User user)
         {
+            if(Context.Users.Any(u => u.Email.Equals(user.Email))) {
+                return Ok("Same Email");
+            }
+
             user.CreatedOn = DateTime.Now;
             
             Context.Users.Add(user);
@@ -43,7 +47,7 @@ namespace API.Controllers
 
             EmailService.SendEmail(user.Email, subject, body);
 
-            return Ok("Account Registered! Check Email for Verification");
+            return Ok("Account Registered! Please Check Your Email");
         }
 
         [HttpGet("Login")]
@@ -80,6 +84,58 @@ namespace API.Controllers
                return Ok(Context.Rooms.ToList());
             }
             return NotFound();
+        }
+
+        [HttpPost("SetBookings")]
+        public ActionResult SetBookings(Booking booking)
+        {
+            // Check for overlap
+            var isOverlap = Context.Bookings.Any(b =>
+                b.RoomId == booking.RoomId &&
+                b.Id != booking.Id && 
+                (
+                    (b.BookingFrom.Year < booking.BookingTo.Year && b.BookingTo.Year > booking.BookingFrom.Year) ||
+                    (b.BookingFrom.Year == booking.BookingTo.Year && b.BookingTo.Year == booking.BookingFrom.Year &&
+                     b.BookingFrom.Month <= booking.BookingTo.Month && b.BookingTo.Month >= booking.BookingFrom.Month &&
+                     b.BookingFrom.Day <= booking.BookingTo.Day && b.BookingTo.Day >= booking.BookingFrom.Day)
+                ));
+
+            if (isOverlap)
+            {
+                return Ok("Booked Not Available");
+            }
+
+            Context.Bookings.Add(booking);
+            Context.SaveChanges();
+
+            return Ok("Booking Done");
+        }
+
+
+
+        [HttpGet("GetBookings")]
+        public ActionResult GetBookings()
+        {
+            if (Context.Bookings.Any())
+            {
+                return Ok(Context.Bookings.ToList());
+            }
+            return NotFound();
+        }
+
+        [HttpGet("GetSpecificBookings")]
+        public ActionResult GetSpecificBookings(int userId) {
+
+            var specificBookings = Context.Bookings
+                .Where(booking => booking.UserId == userId)
+                .ToList();
+
+            if (specificBookings.Any())
+            {
+                return Ok(specificBookings);
+            }
+
+            return Ok("No Res");
         }
     }
 }

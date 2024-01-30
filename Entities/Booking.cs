@@ -7,11 +7,8 @@
         public int UserId { get; set; }
         public DateTime BookingFrom { get; set; }
         public DateTime BookingTo { get; set; }
-        public BookingVerification BookingVerification = BookingVerification.PENDING;
-    }
+        public int HotelId { get; set; }
 
-    public enum BookingVerification
-    {
-        PENDING, CONFIRMED
+        public float ExpAmt { get; set; }
     }
 }
